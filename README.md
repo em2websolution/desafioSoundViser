@@ -17,7 +17,6 @@ Comprovante
 * A aplicação DEVE ser realizada com NestJS (e suas tecnologias disponíveis), Sequelize e MySQL.
 * Deve ser possível efetuar o uso do sistema normalmente caso a API B esteja fora do ar, somente o processamento da transferência não será 
 ### **API A - CRUD USUÁRIO **
-
 * A API A, é responsável por receber as requisições do usuário, exceto a ação de processar pagamento, que será feita pela API B, sendo estimulada pela API A.
 
 ### **API B - TRANSAÇÕES **
@@ -204,6 +203,7 @@ Aqui temos a lista de endpoints com todas as informações necessárias.
   }
 
 # Para rodar a aplicação veja o README de cada API **
+* **Import the collection on Postman**  
 
 
 ## Fique em contato
