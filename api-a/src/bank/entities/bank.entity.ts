@@ -17,7 +17,7 @@ export class Bank extends Model<Bank> {
         allowNull: false,
         validate: {
             notEmpty: {
-              msg: "Enter the transaction type"
+              msg: "Digite o tipo de transação: [Deposito | Transferencia | Pagamento"
             }
         }
     })
@@ -28,11 +28,11 @@ export class Bank extends Model<Bank> {
         allowNull: false,
         validate: {
             notEmpty: {
-              msg: "Enter the transaction value"
+              msg: "Digite o valor da transação"
             },
             is: {
                 args: ["^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"],
-                msg: "Enter a valid positive value"
+                msg: "Digite um valor valido"
             },
         }
     })    
@@ -48,7 +48,6 @@ export class Bank extends Model<Bank> {
     @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
         defaultValue: 0
     })
     userIdTransfer: number;

@@ -24,7 +24,7 @@ export class User extends Model<User> {
     allowNull: false,
     validate: {
       notEmpty: {
-        msg: "Enter your name"
+        msg: "Digite o seu nome"
       }
     },
   })
@@ -35,7 +35,7 @@ export class User extends Model<User> {
     validate: {
       len: {
         args: [11, 14],
-        msg: "CPF must be between 11 and 14 characters in length"
+        msg: "CPF precisa conter entre 11 e 14 caracteres"
       },
     },
   })
@@ -45,7 +45,7 @@ export class User extends Model<User> {
     allowNull: false,
     validate: {
       isEmail: {
-        msg: "Enter a valid e-mail"
+        msg: "Digite um e-mail valido"
       }
     },
   })

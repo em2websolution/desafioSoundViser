@@ -2,7 +2,8 @@ import { BadRequestException, Inject, Injectable, NotFoundException, Body, HttpS
 import { USER_REPOSITORY } from '../utils/constants';
 import { Bank } from './entities/bank.entity';
 import { User } from '../users/entities/user.entity';
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import { Length } from 'class-validator';
 const Op = require('Sequelize').Op
 
 @Injectable()
@@ -12,65 +13,74 @@ export class BankService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
 
-  async createDeposit(createDeposit: Bank, userId): Promise<Bank>  {
+  async createDeposit(createDeposit) {
 
     if(createDeposit.userIdTransfer === createDeposit.userId) {
-      throw new BadRequestException('You cannot transfer to your own account');
+      throw new NotFoundException('Transação não permitida');
+
     }
 
     switch (createDeposit.type) {
       case "Deposito":
-        let resDeposito = await this.httpService.post<Bank>(`http://localhost:4000/api/v1/bank/`, createDeposit, userId) 
+        let resDeposito = await this.httpService.post(`http://localhost:4000/api/v1/bank/`, createDeposit) 
         .toPromise()
         .then((res)=>  { 
+
           return res
         })
-        .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+        .catch((error) => { return error })
 
         return resDeposito?.data
         break;
         
       case "Transferencia":
         const saldo = await this.getSaldoBank(createDeposit.userId)
-        console.log('SALDO:', saldo?.data)
 
         if (saldo?.data < createDeposit.value) {
-            throw new BadRequestException(`Balance unavailable: ${saldo}`);
+           return Object.assign(
+            {"Saldo INDISPÓNIVEL": saldo?.data },
+             {"Conta User": createDeposit.userId },
+             {"Tipo de Transação": "Transferência" },
+             {"Data": new Date()}
+            );
         }
 
         const data = await this.getUser(createDeposit.userIdTransfer)
         .then( async (res) => { 
           if (res?.userId) {
 
-            let resTransferencia = await this.httpService.post<Bank>(`http://localhost:4000/api/v1/bank/`, createDeposit, userId) 
+            let resTransferencia = await this.httpService.post(`http://localhost:4000/api/v1/bank/`, createDeposit) 
             .toPromise()
             .then((res)=>  { 
-              if (res.data) {
+              if (res.data || res.data.Length > 0) {
                 return res
               } 
               else {
-                  throw new NotFoundException('User not found');
+                throw new NotFoundException('User not found');
               }
-              return res
             })
-            .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+            .catch((error) => { return error })
 
             return resTransferencia?.data
           } 
           else {
-              throw new NotFoundException('User of transfer not found');
+            return Object.assign(
+              {"Conta User": "Conta de usuário não encontrada"},
+              {"Tipo de Transação": "Transferência" },
+              {"Data": new Date()}
+              );
           }
         })
         return data
         break;
     
       case "Pagamento":
-        let resPagamento = await this.httpService.post<Bank>(`http://localhost:4000/api/v1/bank/`, createDeposit, userId) 
+        let resPagamento = await this.httpService.post<Bank>(`http://localhost:4000/api/v1/bank/`, createDeposit) 
         .toPromise()
         .then((res)=>  { 
           return res
         })
-        .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+        .catch((error) => { return error })
 
         return resPagamento?.data
 
@@ -85,12 +95,14 @@ export class BankService {
   }
 
   async getSaldoBank(_id: number) {   
+   
+   console.log('saldo1')
     let saldo = await this.httpService.get<number>(`http://localhost:4000/api/v1/bank/saldo/${_id}`) 
     .toPromise()
     .then((res)=>  { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return saldo 
 
@@ -102,7 +114,7 @@ export class BankService {
     .then((res)=>  { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return response 
   }

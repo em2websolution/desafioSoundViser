@@ -16,54 +16,82 @@ export class BankService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
 
-  async createDeposit(createDeposit: Bank, userId): Promise<Bank>  {
+  async createDeposit(createDeposit: Bank): Promise<Bank>  {
 
     if(createDeposit.userIdTransfer === createDeposit.userId) {
-      throw new BadRequestException('You cannot transfer to your own account');
+      throw new BadRequestException('Você não pode transferir para sua conta');
     }
 
     switch (createDeposit.type) {
+      
       case "Deposito":
-        const dataDeposito = await this.bankRepository.create<Bank>(createDeposit, userId )
-        .catch((error) => { throw new BadRequestException('Internal Server Error', error['errors'][0]['message'])})
+  
+
+        const dataDeposito = await this.bankRepository.create<Bank>(createDeposit )
+        .catch((error) => { 
+          
+          throw new BadRequestException(error.message);
+
+        
+        })
         return dataDeposito
         break;
 
       case "Transferencia":
-        const saldo = await this.getSaldo(createDeposit.userId)
+        const saldoTransferencia = await this.getSaldo(createDeposit.userId)
 
-        if (saldo < createDeposit.value) {
-          throw new BadRequestException(`Balance unavailable: ${saldo}`);
+        if (saldoTransferencia < createDeposit.value) {
+          throw new BadRequestException(`Saldo insuficiente: R$ ${saldoTransferencia}`);
         }
 
         const data = await this.getUser(createDeposit.userIdTransfer)
         .then( async (res) => { 
           if (res?.userId) {
-            const resDeposito = await this.bankRepository.create<Bank>(createDeposit, userId )
+            const resDeposito = await this.bankRepository.create<Bank>(createDeposit)
               .then((res) => { 
-                console.log('res user send', res)
                 if (res?.userId) {
                   return res
                 } 
                 else {
-                    throw new NotFoundException('User not found');
+                  return ('Usuário não encontrado');
                 }
               })
-              .catch((error) => { throw new NotFoundException('Internal Server Error', error['errors'][0]['message'])})
+              .catch((error) => { 
+                throw new BadRequestException(error.message);
+
+                const errObj = {};
+                error.errors.map( er => {
+                   errObj[er.path] = er.message;
+                })
+                errObj
+                const body = { ...errObj, "error": 0 };
+
+                return body
+              })
               return resDeposito
           } 
           else {
-              throw new NotFoundException('User of transfer not found');
+              return ('Usuário não encontrado');
           }
         })
-        .catch((error) => { throw new BadRequestException('Internal Server Error', error['errors'][0]['message'])})
+        .catch((error) => { return error })
 
         return data
         break;
     
       case "Pagamento":
-        const dataPagamento = await this.bankRepository.create<Bank>(createDeposit, userId )
-        .catch((error) => { throw new BadRequestException('Internal Server Error', error['errors'][0]['message'])})
+        const saldoPagamento = await this.getSaldo(createDeposit.userId)
+
+        if (saldoPagamento < createDeposit.value) {
+          throw new BadRequestException(`Saldo insuficiente: R$ ${saldoPagamento}`);
+          break
+        }
+
+        const dataPagamento = await this.bankRepository.create<Bank>(createDeposit )
+        .catch((error) => { 
+          throw new BadRequestException(error.message);
+        })
+        
         return dataPagamento
         break;
     }
@@ -76,6 +104,8 @@ export class BankService {
   }
 
   async getSaldo(_id: number) {
+
+
     const data = await this.bankRepository.findAll({
       attributes: [
         [
@@ -83,11 +113,11 @@ export class BankService {
         (
           `
             (
-              SUM(value) + ( SELECT SUM(value) FROM Banks WHERE Banks.userIdTransfer = ${_id} )
+              COALESCE(sum(value),0) + ( SELECT COALESCE(sum(value),0) FROM Banks WHERE Banks.userIdTransfer = ${_id} )
             )
            -           
             (
-              SELECT SUM(value) FROM Banks WHERE Banks.userId = ${_id} and Banks.type in ("Transferencia","Pagamento")
+              SELECT COALESCE(sum(value),0) FROM Banks WHERE Banks.userId = ${_id} and Banks.type in ("Transferencia","Pagamento")
             ) 
           `
         ),
@@ -121,7 +151,7 @@ export class BankService {
     })
     .then((res) => { 
       if (res.length <= 0 ) {
-        throw new NotFoundException('Transaction History not found');
+        throw new NotFoundException('Transação não permitida');
       }
       return res
     })

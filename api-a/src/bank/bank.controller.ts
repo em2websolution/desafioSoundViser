@@ -1,20 +1,24 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ServiceUnavailableException } from '@nestjs/common';
 import { BankService } from './bank.service';
 import { CreateBankDto } from './dto/create-bank.dto';
-import { UpdateBankDto } from './dto/update-bank.dto';
 
 @Controller('bank')
 export class BankController {
   constructor(private readonly bankService: BankService) {}
 
   @Post()
-  public async createDeposit(@Body() createBankDto, idUser: number): Promise<CreateBankDto> {
-    const data = await this.bankService.createDeposit(createBankDto, idUser)
+  public async createDeposit(@Body() createBankDto: CreateBankDto) {
+    const data = await this.bankService.createDeposit(createBankDto)
     .then((res) => { 
-      console.log('res >', res);
+
+      if (res['error'] == 0) {
+        console.log('res 1 ' , res)
+        return res.value
+      }
+
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return data
   } 
@@ -25,7 +29,7 @@ export class BankController {
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return saldo?.data
   }
@@ -36,7 +40,7 @@ export class BankController {
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return history?.data
   }

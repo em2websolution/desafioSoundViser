@@ -8,7 +8,7 @@ export class UsersService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
   
-  async createUser(createUser: User): Promise<User> {
+  async createUser(createUser) {
     return await this.userRepository.create<User>(createUser);
   }
 
@@ -21,11 +21,11 @@ export class UsersService {
     .then( async (res) => { 
       console.log('res delete:', res)
       if (res == null ) {
-        throw new NotFoundException('User not found');
+        throw new NotFoundException('Usuário não encontrado');
       }
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return response
   }
@@ -35,7 +35,7 @@ export class UsersService {
     .then( async (res) => { 
       console.log('res update:', res[1])
       if (!res[1] ) {
-        return `User not found`;
+        return `Usuário não encontrado`;
       }
       return `This action updates a #${userId} user`;
     })
@@ -47,7 +47,7 @@ export class UsersService {
     .then( async (res) => { 
       console.log('res delete:', res)
       if (res == 0 ) {
-        return `User not found`;
+        return `Usuário não encontrado`;
       }
       return `This action removes a #${userId} user`;
     })

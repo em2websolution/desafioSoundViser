@@ -13,7 +13,7 @@ export class UsersController {
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
     return data
   }
 
@@ -23,18 +23,18 @@ export class UsersController {
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return data
   }
 
   @Post()
-  public async createUser(@Body() createUserDto): Promise<CreateUserDto> {
+  public async createUser(@Body() createUserDto: CreateUserDto) {
     const data = this.usersService.createUser(createUserDto)
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return data
 
@@ -51,7 +51,7 @@ export class UsersController {
     .then((res) => { 
       return res
     })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+    .catch((error) => { return error })
 
     return data
   }
