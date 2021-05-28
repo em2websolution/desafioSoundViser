@@ -32,6 +32,18 @@
 $ npm install
 ```
 
+## Database providers
+Insert the credentials of local database
+
+```src/database/database.providers.ts
+
+    dialect: "mysql",
+    host: "localhost",
+    port: "3306",
+    username: "root",
+    password: "mysql",
+    database: "usersdb"
+ ``` 
 ## Running the app
 
 ```bash
@@ -64,10 +76,5 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Eduardo Marques](https://www.linkedin.com/in/eduardomarquestorres/)
 
-## License
-
-Nest is [MIT licensed](LICENSE).
