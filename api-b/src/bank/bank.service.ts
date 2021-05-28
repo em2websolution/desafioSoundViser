@@ -16,7 +16,7 @@ export class BankService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
 
-  async createDeposit(createDeposit: Bank): Promise<Bank>  {
+  async createDeposit(createDeposit)  {
 
     if(createDeposit.userIdTransfer === createDeposit.userId) {
       throw new BadRequestException('Você não pode transferir para sua conta');

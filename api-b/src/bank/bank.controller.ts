@@ -8,7 +8,7 @@ export class BankController {
   constructor(private readonly bankService: BankService) {}
 
   @Post()
-  public async createDeposit(@Body() createBankDto) {
+  public async createDeposit(@Body() createBankDto: CreateBankDto) {
     const data = await this.bankService.createDeposit(createBankDto)
     .then((res) => { 
 
