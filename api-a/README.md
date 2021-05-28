@@ -57,7 +57,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 ## Swagger
-http://localhost:3000/api/
+- [API A](http://localhost:3000/api/) - http://localhost:3000/api/
+## Postman
+-  [Import colleciton](https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json) - https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json
 ## Test
 
 ```bash
