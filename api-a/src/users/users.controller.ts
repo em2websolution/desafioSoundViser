@@ -7,18 +7,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  public async createUser(@Body() createUserDto): Promise<CreateUserDto> {
-    const data = this.usersService.createUser(createUserDto)
-    .then((res) => { 
-      return res
-    })
-    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
-
-    return data
-
-  }
-
   @Get()
   public async getUsers(): Promise<CreateUserDto[]> {
     const data = this.usersService.getAllUsers()
@@ -40,6 +28,18 @@ export class UsersController {
     return data
   }
 
+  @Post()
+  public async createUser(@Body() createUserDto): Promise<CreateUserDto> {
+    const data = this.usersService.createUser(createUserDto)
+    .then((res) => { 
+      return res
+    })
+    .catch((error) => { throw new ServiceUnavailableException('Internal Server Error', error['errors'][0]['message'])})
+
+    return data
+
+  }
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateUser(id, updateUserDto);

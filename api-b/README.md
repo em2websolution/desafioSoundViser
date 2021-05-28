@@ -57,6 +57,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Swagger
+http://localhost:4000/api/
+
 ## Test
 
 ```bash

@@ -56,7 +56,8 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
+## Swagger
+http://localhost:3000/api/
 ## Test
 
 ```bash
@@ -77,4 +78,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## Stay in touch
 
 - Author - [Eduardo Marques](https://www.linkedin.com/in/eduardomarquestorres/)
-
