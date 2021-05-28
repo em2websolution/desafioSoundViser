@@ -203,8 +203,12 @@ Aqui temos a lista de endpoints com todas as informações necessárias.
   }
 
 # Para rodar a aplicação veja o README de cada API **
-* **Import the collection on Postman**  
+## Swagger
+http://localhost:3000/api/
+http://localhost:4000/api/
 
+## Postman
+* **Import the collection**  
 
 ## Fique em contato
 
