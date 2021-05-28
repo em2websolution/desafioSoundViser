@@ -209,7 +209,7 @@ Aqui temos a lista de endpoints com todas as informações necessárias.
 - [API B](http://localhost:4000/api/) - http://localhost:4000/api/
 
 ## Postman
-* **Import the collection**  
+-  [Import colleciton](https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json) - https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json
 
 ## Fique em contato
 
