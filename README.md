@@ -1,4 +1,4 @@
-# desafioSoundViser**
+# DESAFIO SOUNDVISER**
 O objetivo deste desafio é criar um sistema responsável por manter a conta de um ou vários produtores musical dentro da plataforma.
 
 * Ter uma API onde o produtor se cadastra no sistema, sendo necessário informar nome, cpf e e-mail, todos os campos são obrigatórios e devem ser válidos de acordo com seus respectivos campos. O sistema, deverá gerar um número de conta bancaria para esse Produtor. A conta bancária é única e exclusiva.
@@ -202,7 +202,7 @@ Aqui temos a lista de endpoints com todas as informações necessárias.
     "userIdTransfer": 2
   }
 
-# Para rodar a aplicação veja o README de cada API **
+# Para rodar a aplicação veja o README de cada projeto **
 ## Swagger
 - [API A](http://localhost:3000/api/) - http://localhost:3000/api/
 
@@ -210,6 +210,20 @@ Aqui temos a lista de endpoints com todas as informações necessárias.
 
 ## Postman
 -  [Import colleciton](https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json) - https://github.com/em2websolution/desafioSoundViser/blob/main/TESTE.postman_collection.json
+
+
+# Teste Front End **
+Construir layout de um feed conforme imagem (construir layout conforme a imagem apresentada).
+2. Consumir dados de api/mock.
+3. Exibir na tela os dados da api no layout criado conforme Imagem.
+4. Aplicar teste unitário nos inputs e outputs.
+5. Sugerir uma solução ao seguinte problema: Como você faria para atualizar dados em tempo real, de vários campos simultâneos; Explo, novas curtidas, Seguidores, plays e etc.
+## Sugestão
+Como sugestão poderiamos utilizar a tecnologia de 
+```WebSockets ```
+
+## **Endpoints FRONT END **
+* **Path** `localhost:4200` **
 
 ## Fique em contato
 

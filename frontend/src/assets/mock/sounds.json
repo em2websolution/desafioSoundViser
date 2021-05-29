@@ -1,0 +1,31 @@
+{
+    "sounds": [
+        {
+            "soundName": "Should Be",
+            "artistName": "Vanghu",
+            "category": "House",
+            "likes": 177,
+            "comments": 77,
+            "play": "33k",
+            "img": "assets/img/sound1.jpg"
+        },
+        {
+            "soundName": "In the Closet",
+            "artistName": "Michael Jackson",
+            "category": "Pop",
+            "likes": 500,
+            "comments": 388,
+            "play": "100k",
+            "img": "assets/img/sound2.jpg"
+        },
+        {
+            "soundName": "FUEGO",
+            "artistName": "Alok",
+            "category": "House/Eletro",
+            "likes": 250,
+            "comments": 50,
+            "play": "30k",
+            "img": "assets/img/sound3.jpg"
+        }
+    ]
+}

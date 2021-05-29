@@ -1,0 +1,82 @@
+<div class="main-container">
+
+    <h2> SoundViser </h2>
+    <div class="container__border" *ngFor="let item of soundsList">
+        <div class="container">
+
+                <div class="container__pic">
+                    <img src="{{ item.img }}">
+                </div>
+
+                <div class="container__body">
+
+                        <div class="body__info">
+
+                                <div class="info__artist">
+
+                                    <div class="info__artist--song" > {{ item.soundName }} </div>
+                                    <div class="info__artist--name" > {{ item.artistName }} </div>
+
+                                </div>
+
+                                <div class="info__artist-category">
+                                    <div>
+                                        {{ item.category }}
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <div class="body__info-player">
+
+                            <div class="info-player__functions">
+
+                                    <div class="function__line"> 
+                                    </div>
+
+                                    <div class="function__icons"> 
+
+                                        <div>
+                                            <div class="icons"> 
+                                                <mat-icon>favorite</mat-icon>                                           
+                                                <div> {{ item.likes }} </div>
+                                            </div>
+
+                                            <div class="icons"> 
+                                                <mat-icon>comment</mat-icon>                                           
+                                                <div> {{ item.comments }} </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div class="icons"> 
+                                                <mat-icon>play_arrow</mat-icon>                                           
+                                                <div> {{item.play }} </div>
+                                            </div>
+
+                                            <div class="icons"> 
+                                                <mat-icon>cloud_download</mat-icon>  
+                                                <div>&nbsp; Download </div>                                         
+                                            </div>
+                                        </div>
+
+                                        <div id="loop">
+                                             <mat-icon>loop</mat-icon>                                         
+                                        </div>
+
+                                    </div>
+
+                            </div>
+
+                            <div class="info-player__comment"> 
+
+                                <input placeholder="Digite seu Feedback">
+                            </div>
+                        </div>
+
+                </div>     
+
+        </div>
+    </div>
+
+</div>

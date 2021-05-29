@@ -37,7 +37,7 @@ export class UsersService {
       if (!res[1] ) {
         return `Usuário não encontrado`;
       }
-      return `This action updates a #${userId} user`;
+      return `Usuário #${userId} alterado`;
     })
     return response
   } 
@@ -49,7 +49,7 @@ export class UsersService {
       if (res == 0 ) {
         return `Usuário não encontrado`;
       }
-      return `This action removes a #${userId} user`;
+      return `Usuário #${userId} excluido`;
     })
     return  response
   }
